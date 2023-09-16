@@ -2,54 +2,54 @@ import { Todo } from "../types.ts";
 
 export const mockAllCompletedTodos: Array<Todo> = [
     {
-        completed: true,
-        id: '7b6d5f38-e510-4409-aeb0-1f6f6422384e',
-        title: 'Ver el stream de midu'
+        id: "a123cf94-9108-460a-aba0-82f4c82487f2",
+        title: "Learn TypeScript",
+        completed: true
     },
     {
-        completed: true,
-        id: 'efad0afc-7d2e-4020-8ef4-14fd0b832de8',
-        title: 'Aprender React con el curso de midu'
+        id: "8f5a56d5-c6d5-418b-be03-cce4c00e8d65",
+        title: "Learn React",
+        completed: true
     },
     {
-        completed: true,
-        id: '6a3d0d0f-d2d6-4d2a-9b08-5a5d8a5e0c1d',
-        title: 'Mover las manitas'
+        id: "c55cfc3a-5612-49da-a85c-4079341d4f1b",
+        title: "Define CSS styles",
+        completed: true
     }
 ];
 
 export const mockAllActiveTodos: Array<Todo> = [
     {
-        completed: false,
-        id: 'c19f8c9b-ae32-4c8a-9bed-d141b09f5477',
-        title: 'Hacer ejercicio de vez en cuando'
+        id: "9f75da7f-6e46-4526-99dd-be34acf03af2",
+        title: "Create an API",
+        completed: false
     },
     {
-        completed: false,
-        id: 'efad0afc-7d2e-4020-8ef4-14fd0b832de8',
-        title: 'Seguir a midu en TikTok'
+        id: "0941ace4-b8de-4ac1-bce1-71a9de0737d7",
+        title: "Connect the API with the frontend",
+        completed: false
     },
     {
-        completed: false,
-        id: '6a3d0d0f-d2d6-4d2a-9b08-5a5d8a5e0c1d',
-        title: 'Darle estrellita al repo de midu'
+        id: "fc2ad6ff-52aa-404a-bdf2-82634f7f43c9",
+        title: "Avoid useEffect infinite loops",
+        completed: false
     }
 ];
 
 export const mockTodos: Array<Todo> = [
     {
-        completed: false,
-        id: 'c19f8c9b-ae32-4c8a-9bed-d141b09f5477',
-        title: 'Sacar al miduperro a pasear'
+        id: "8f0226ba-f480-48f8-ab6d-8e7957117e4c",
+        title: "Open a PR creating the filters feature",
+        completed: false
     },
     {
-        completed: true,
-        id: 'efad0afc-7d2e-4020-8ef4-14fd0b832de8',
-        title: 'Ir a por el pan'
+        id: "2fac7de6-6bee-4fb4-8f8d-2d060092ee6a",
+        title: "Learn how to use TypeScript with React",
+        completed: true
     },
     {
-        completed: false,
-        id: '6a3d0d0f-d2d6-4d2a-9b08-5a5d8a5e0c1d',
-        title: 'Participar en la Hackathon de Cloudinary'
+        id: "0d8aa04e-b2a6-4eb3-a9b7-f7cdaeb4a23a",
+        title: "Learn useReducer in React",
+        completed: false
     }
 ];
