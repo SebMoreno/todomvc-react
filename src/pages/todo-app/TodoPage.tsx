@@ -1,9 +1,9 @@
 import 'todomvc-app-css/index.css';
-import { Todo } from "./Todo.tsx";
 import { useState } from "react";
 import { mockTodos } from "../../mocks/todos.ts";
 import { Todo as TodoType } from "../../types.ts";
 import { Todos } from "./Todos.tsx";
+import { Header } from "./Header.tsx";
 
 export const TodoPage = () => {
     const [todos, setTodos] = useState(mockTodos);
@@ -20,12 +20,14 @@ export const TodoPage = () => {
         setTodos(todos.filter(todo => todo.id !== id));
     }
 
+    function handleSave(title: TodoType["title"]) {
+        setTodos([...todos, {id: crypto.randomUUID(), title, completed: false}]);
+    }
+
+
 
     return <main className="todoapp">
-        <header className="header">
-            <h1>todos</h1>
-            <input className="new-todo" placeholder="¿Qué quieres hacer?" autoFocus/>
-        </header>
+        <Header title="todos" onCreateTodo={handleSave}/>
         <Todos
             todos={todos}
             onDeleteTodo={handleDeleteTodo}
