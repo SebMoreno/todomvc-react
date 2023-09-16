@@ -1,30 +1,23 @@
 import 'todomvc-app-css/index.css';
-import { useState } from "react";
-import { mockTodos } from "../../mocks/todos.ts";
-import { Todo as TodoType } from "../../types.ts";
 import { Todos } from "./Todos.tsx";
 import { Header } from "./Header.tsx";
 import { Footer } from "./Footer.tsx";
+import { useTodosState } from "../../hooks/useTodosState.ts";
+import { mockTodos } from "../../mocks/todos.ts";
 
 export const TodoPage = () => {
-    const [todos, setTodos] = useState(mockTodos);
-
-    function handleTodoCompleted(id: TodoType["id"], completed: TodoType["completed"]) {
-        setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, completed}));
-    }
-
-    function handleChangeTodoTitle(id: TodoType["id"], title: TodoType["title"]) {
-        setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, title}));
-    }
-
-    function handleDeleteTodo(id: TodoType["id"]) {
-        setTodos(todos.filter(todo => todo.id !== id));
-    }
-
-    function handleSave(title: TodoType["title"]) {
-        setTodos([...todos, {id: crypto.randomUUID(), title, completed: false}]);
-    }
-
+    const {
+        todos,
+        activeCount,
+        completedCount,
+        filterSelected,
+        handleSave,
+        handleClearCompleted,
+        handleFilterChange,
+        handleDeleteTodo,
+        handleTodoCompleted,
+        handleChangeTodoTitle
+    } = useTodosState(mockTodos);
 
     return <main className="todoapp">
         <Header title="todos" onCreateTodo={handleSave}/>
@@ -34,6 +27,12 @@ export const TodoPage = () => {
             onTodoCompleted={handleTodoCompleted}
             onChangeTodoTitle={handleChangeTodoTitle}
         />
-        <Footer/>
+        <Footer
+            activeCount={activeCount}
+            completedCount={completedCount}
+            filterSelected={filterSelected}
+            onFilterChange={handleFilterChange}
+            onClearCompleted={handleClearCompleted}
+        />
     </main>;
 };
