@@ -1,20 +1,20 @@
 import 'todomvc-app-css/index.css';
+import { Todo } from "./Todo.tsx";
+import { useState } from "react";
+import { mockTodos } from "../../mocks/todos.ts";
 
 export const TodoPage = () => {
+    const [todos, setTodos] = useState(mockTodos);
+
     return <main className="todoapp">
         <header className="header">
             <h1>todos</h1>
             <input className="new-todo" placeholder="¿Qué quieres hacer?" autoFocus/>
         </header>
         <ul className="todo-list">
-            <li className="completed">
-                <div className="view">
-                    <input type="checkbox" className="toggle"/>
-                    <label htmlFor="">todo1</label>
-                    <button className="destroy"/>
-                </div>
-                <input type="text" className="edit"/>
-            </li>
+            {todos.map(todo => <li className="" key={todo.id}>
+                <Todo id={todo.id} completed={todo.completed} title={todo.title}/>
+            </li>)}
         </ul>
         <footer className="footer">
             <span className="todo-count">4 tareas pendientes</span>
