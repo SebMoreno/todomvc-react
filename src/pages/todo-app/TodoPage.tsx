@@ -4,6 +4,7 @@ import { mockTodos } from "../../mocks/todos.ts";
 import { Todo as TodoType } from "../../types.ts";
 import { Todos } from "./Todos.tsx";
 import { Header } from "./Header.tsx";
+import { Footer } from "./Footer.tsx";
 
 export const TodoPage = () => {
     const [todos, setTodos] = useState(mockTodos);
@@ -25,7 +26,6 @@ export const TodoPage = () => {
     }
 
 
-
     return <main className="todoapp">
         <Header title="todos" onCreateTodo={handleSave}/>
         <Todos
@@ -34,14 +34,6 @@ export const TodoPage = () => {
             onTodoCompleted={handleTodoCompleted}
             onChangeTodoTitle={handleChangeTodoTitle}
         />
-        <footer className="footer">
-            <span className="todo-count">4 tareas pendientes</span>
-            <ul className="filters">
-                <li><a href="/">Todas</a></li>
-                <li><a className="selected" href="/">Activas</a></li>
-                <li><a href="/">Completadas</a></li>
-            </ul>
-            <button className="clear-completed">Borrar completados</button>
-        </footer>
+        <Footer/>
     </main>;
 };
