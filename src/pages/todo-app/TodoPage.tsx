@@ -3,10 +3,10 @@ import { Todo } from "./Todo.tsx";
 import { useState } from "react";
 import { mockTodos } from "../../mocks/todos.ts";
 import { Todo as TodoType } from "../../types.ts";
+import { Todos } from "./Todos.tsx";
 
 export const TodoPage = () => {
     const [todos, setTodos] = useState(mockTodos);
-    const [idTodoEdited, setIdTodoEdited] = useState<TodoType["id"] | null>(null);
 
     function handleTodoCompleted(id: TodoType["id"], completed: TodoType["completed"]) {
         setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, completed}));
@@ -26,23 +26,12 @@ export const TodoPage = () => {
             <h1>todos</h1>
             <input className="new-todo" placeholder="¿Qué quieres hacer?" autoFocus/>
         </header>
-        <ul className="todo-list">
-            {todos.map(todo =>
-                <li className={`
-                        ${todo.completed ? 'completed' : ''}
-                        ${idTodoEdited === todo.id ? 'editing' : ''}
-                     `} key={todo.id}>
-                <Todo
-                    completed={todo.completed}
-                    title={todo.title}
-                    isEditing={idTodoEdited === todo.id}
-                    onEditingChange={isEditing => setIdTodoEdited(isEditing ? todo.id : null)}
-                    onCompleted={completed => handleTodoCompleted(todo.id, completed)}
-                    onChangeTitle={title => handleChangeTodoTitle(todo.id, title)}
-                    onDelete={() => handleDeleteTodo(todo.id)}
-                />
-            </li>)}
-        </ul>
+        <Todos
+            todos={todos}
+            onDeleteTodo={handleDeleteTodo}
+            onTodoCompleted={handleTodoCompleted}
+            onChangeTodoTitle={handleChangeTodoTitle}
+        />
         <footer className="footer">
             <span className="todo-count">4 tareas pendientes</span>
             <ul className="filters">
