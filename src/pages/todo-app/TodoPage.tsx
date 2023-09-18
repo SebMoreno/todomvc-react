@@ -1,9 +1,10 @@
-import 'todomvc-app-css/index.css';
+import "../../../node_modules/todomvc-app-css/index.css";
 import { Todos } from "./Todos.tsx";
 import { Header } from "./Header.tsx";
 import { Footer } from "./Footer.tsx";
 import { useTodosState } from "../../hooks/useTodosState.ts";
 import { mockTodos } from "../../mocks/todos.ts";
+import {useEffect} from "react"
 
 export const TodoPage = () => {
     const {
