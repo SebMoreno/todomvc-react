@@ -14,20 +14,33 @@ export const useTodosState = (initialTodos?: Array<Todo>): {
     handleChangeTodoTitle: (id: Todo["id"], title: Todo["title"]) => void
 } => {
     const [todos, setTodos] = useState(initialTodos ?? []);
+    const [filterSelected, setFilterSelected] = useState<FilterValue>("all");
+
+    let activeCount = todos.filter(todo => !todo.completed).length;
+    let completedCount = todos.length - activeCount;
 
     return {
-        todos,
-        handleTodoCompleted: (id, completed) => {
-            setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, completed}));
+        activeCount: activeCount,
+        completedCount: completedCount,
+        todos: todos,
+        filterSelected: filterSelected,
+        handleClearCompleted: () => {
+            setTodos(todos.filter(todo => !todo.completed));
         },
-        handleChangeTodoTitle: (id, title) => {
-            setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, title}));
+        handleFilterChange: filter => {
+            setFilterSelected(filter);
         },
         handleDeleteTodo: id => {
             setTodos(todos.filter(todo => todo.id !== id));
         },
         handleSave: title => {
             setTodos([...todos, {id: crypto.randomUUID(), title, completed: false}]);
-        }
+        },
+        handleTodoCompleted: (id, completed) => {
+            setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, completed}));
+        },
+        handleChangeTodoTitle: (id, title) => {
+            setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, title}));
+        },
     };
 };

@@ -5,8 +5,9 @@ export class TodoService {
         return JSON.parse(localStorage.getItem('todos') ?? '[]');
     }
 
-    static async setTodos(todos: Array<Todo>): Promise<boolean> {
+    static async setTodos(todos: Array<Todo>): Promise<void> {
         localStorage.setItem('todos', JSON.stringify(todos));
-        return true;
     }
 }
+
+export const todos = await TodoService.getTodos();
