@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import { Todos } from "./Todos.tsx";
 import { Header } from "./Header.tsx";
 import { Footer } from "./Footer.tsx";
-import { useTodosState } from "../../hooks/useTodosState.ts";
+// import { useTodosState } from "../../hooks/useTodosState.ts";
+import { useTodoReducer } from "../../hooks/useTodoReducer.ts";
 // import { mockTodos } from "../../mocks/todos.ts";
 import { todos as saved_todos, TodoService } from "../../services/todos.ts";
 
@@ -20,7 +21,8 @@ export const TodoPage = () => {
         handleTodoCompleted,
         handleChangeTodoTitle
 
-    } = useTodosState(saved_todos);
+    } =  useTodoReducer(saved_todos); 
+    // } = useTodosState(saved_todos);
 
     useEffect(() => {
         TodoService.setTodos(todos);
