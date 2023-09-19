@@ -3,8 +3,8 @@ import { Todos } from "./Todos.tsx";
 import { Header } from "./Header.tsx";
 import { Footer } from "./Footer.tsx";
 import { useTodosState } from "../../hooks/useTodosState.ts";
-import { mockTodos } from "../../mocks/todos.ts";
-import {useEffect} from "react"
+// import { mockTodos, initTodos } from "../../mocks/todos.ts";
+// import {useEffect} from "react"
 
 export const TodoPage = () => {
     const {
@@ -18,12 +18,13 @@ export const TodoPage = () => {
         handleDeleteTodo,
         handleTodoCompleted,
         handleChangeTodoTitle
-    } = useTodosState(mockTodos);
+    } = useTodosState();
 
     return <main className="todoapp">
         <Header title="todos" onCreateTodo={handleSave}/>
         <Todos
             todos={todos}
+            activeFilter={filterSelected}
             onDeleteTodo={handleDeleteTodo}
             onTodoCompleted={handleTodoCompleted}
             onChangeTodoTitle={handleChangeTodoTitle}

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FilterValue, Todo } from "../types.ts";
+import { TodoService } from "../services/todos.ts"
 
-export const useTodosState = (initialTodos: Array<Todo>): {
+export const useTodosState = (): {
     activeCount: number
     completedCount: number
     todos: Array<Todo>
@@ -13,34 +14,41 @@ export const useTodosState = (initialTodos: Array<Todo>): {
     handleTodoCompleted: (id: Todo["id"], completed: Todo["completed"]) => void
     handleChangeTodoTitle: (id: Todo["id"], title: Todo["title"]) => void
 } => {
-    const [todos, setTodos] = useState(initialTodos ?? []);
-    const [activeCount, setActiveCount] = useState(todos.filter((todo: Todo) => todo.completed == false).length);
-    const [completedCount, setCompletedCount] = useState(todos.filter((todo: Todo) => todo.completed == true).length);
+    const [todos, setTodos] = useState([] as Array<Todo>);
+    const [areLoaded, setAreLoaded] = useState(false);
+    const [activeCount, setActiveCount] = useState(0);
+    const [completedCount, setCompletedCount] = useState(0);
     const [filterSelected, setFilterSelected] = useState('all' as FilterValue);
+
+    useEffect(() =>
+    {
+        TodoService.getTodos().then((todos) => 
+        {
+            setTodos(todos);
+            setActiveCount(todos.filter((todo: Todo) => todo.completed === false).length);
+            setCompletedCount(todos.filter((todo: Todo) => todo.completed).length);
+            setAreLoaded(true);
+        });
+    }, [areLoaded]);
 
     return {
         activeCount: activeCount,
         completedCount: completedCount,
         todos,
         filterSelected: filterSelected,
-        handleClearCompleted: () => {
-            setTodos(todos.filter((todo) => todo.completed == false))
+        handleClearCompleted: () => 
+        {
+            const new_todos = todos.filter((todo) => todo.completed == false);
+            setTodos(new_todos)
             setCompletedCount(0);
+            TodoService.setTodos(new_todos).then()
         },
-        handleFilterChange: (filter) => {
-            setFilterSelected(filter)
-            
-            if(filter != 'all')
-                if(filter == 'completed')
-                    setTodos(todos.filter((todo) => todo.completed == true))
-                else
-                    setTodos(todos.filter((todo) => todo.completed == false))
-            else
-                setTodos(todos);
-        },
-        handleTodoCompleted: (id, completed) => {
-            setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, completed}));
-
+        handleFilterChange: (filter) => setFilterSelected(filter),
+        handleTodoCompleted: (id, completed) => 
+        {
+            const new_todos = todos.map(todo => todo.id !== id ? todo : {...todo, completed});
+            setTodos(new_todos);
+            TodoService.setTodos(new_todos).then()
             if(completed == true)
             {
                 setActiveCount(activeCount - 1);
@@ -53,13 +61,25 @@ export const useTodosState = (initialTodos: Array<Todo>): {
             }
         },
         handleChangeTodoTitle: (id, title) => {
-            setTodos(todos.map(todo => todo.id !== id ? todo : {...todo, title}));
+            const new_todos = todos.map(todo => todo.id !== id ? todo : {...todo, title});
+            setTodos(new_todos);
+            TodoService.setTodos(new_todos).then()
         },
         handleDeleteTodo: id => {
-            setTodos(todos.filter(todo => todo.id !== id));
+            const new_todos = todos.filter(todo => 
+                {
+                    if(todo.id === id) 
+                        todo.completed ? setCompletedCount(completedCount - 1) : setActiveCount(activeCount - 1)
+                    return todo.id !== id
+                })
+            setTodos(new_todos);
+            TodoService.setTodos(new_todos).then()
         },
         handleSave: title => {
-            setTodos([...todos, {id: crypto.randomUUID(), title, completed: false}]);
+            const new_todos = [...todos, {id: crypto.randomUUID(), title, completed: false}];
+            setTodos(new_todos);
+            setActiveCount(activeCount + 1);
+            TodoService.setTodos(new_todos).then()
         }
     };
 };
