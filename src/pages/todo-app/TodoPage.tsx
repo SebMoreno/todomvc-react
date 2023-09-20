@@ -2,7 +2,7 @@ import "../../../node_modules/todomvc-app-css/index.css";
 import { Todos } from "./Todos.tsx";
 import { Header } from "./Header.tsx";
 import { Footer } from "./Footer.tsx";
-import { useTodosState } from "../../hooks/useTodosState.ts";
+import { useTodosReduce, useTodosState } from "../../hooks/useTodosState.ts";
 // import { mockTodos, initTodos } from "../../mocks/todos.ts";
 // import {useEffect} from "react"
 
@@ -18,7 +18,7 @@ export const TodoPage = () => {
         handleDeleteTodo,
         handleTodoCompleted,
         handleChangeTodoTitle
-    } = useTodosState();
+    } = useTodosReduce();
 
     return <main className="todoapp">
         <Header title="todos" onCreateTodo={handleSave}/>
