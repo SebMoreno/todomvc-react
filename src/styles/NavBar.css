@@ -1,0 +1,28 @@
+a, a:hover, a:focus {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 1rem;
+    outline: none;
+}
+
+button:focus {
+    box-shadow: none;
+}
+
+nav {
+    width: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: solid grey;
+    border-radius: 1rem;
+
+    & button {
+        padding: 0 2rem;
+        color: var(--text-color);
+    }
+}
+
+a.hover button.galaxy::before {
+    transform: scaleX(1);
+}

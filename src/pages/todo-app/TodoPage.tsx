@@ -1,11 +1,12 @@
-import 'todomvc-app-css/index.css';
-import { Todos } from "./Todos.tsx";
-import { Header } from "./Header.tsx";
+import { FC, useEffect, useRef, useState } from "react";
 import { Footer } from "./Footer.tsx";
-import { useTodosState } from "../../hooks/useTodosState.ts";
-import { mockTodos } from "../../mocks/todos.ts";
+import { Header } from "./Header.tsx";
+import { Todos } from "./Todos.tsx";
+import { useTodosReducer } from "../../hooks/useTodosReducer.ts";
+import 'todomvc-app-css/index.css';
+import { colors } from "../../types.ts";
 
-export const TodoPage = () => {
+export const TodoPage: FC = () => {
     const {
         todos,
         activeCount,
@@ -17,22 +18,30 @@ export const TodoPage = () => {
         handleDeleteTodo,
         handleTodoCompleted,
         handleChangeTodoTitle
-    } = useTodosState(mockTodos);
+    } = useTodosReducer();
+    const [color, setColor] = useState(colors[0]);
+    const i = useRef(0);
 
-    return <main className="todoapp">
-        <Header title="todos" onCreateTodo={handleSave}/>
-        <Todos
-            todos={todos}
-            onDeleteTodo={handleDeleteTodo}
-            onTodoCompleted={handleTodoCompleted}
-            onChangeTodoTitle={handleChangeTodoTitle}
-        />
-        <Footer
-            activeCount={activeCount}
-            completedCount={completedCount}
-            filterSelected={filterSelected}
-            onFilterChange={handleFilterChange}
-            onClearCompleted={handleClearCompleted}
-        />
-    </main>;
+    useEffect(() => {
+        setColor(colors[i.current++ % colors.length]);
+    }, [todos]);
+
+    return (
+        <div className="todoapp" style={{color}}>
+            <Header title="todos" onCreateTodo={handleSave}/>
+            <Todos
+                todos={todos}
+                onDeleteTodo={handleDeleteTodo}
+                onTodoCompleted={handleTodoCompleted}
+                onChangeTodoTitle={handleChangeTodoTitle}
+            />
+            <Footer
+                activeCount={activeCount}
+                completedCount={completedCount}
+                filterSelected={filterSelected}
+                onFilterChange={handleFilterChange}
+                onClearCompleted={handleClearCompleted}
+            />
+        </div>
+    );
 };

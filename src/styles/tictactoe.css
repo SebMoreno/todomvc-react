@@ -1,0 +1,44 @@
+button {
+    color: var(--text-color);
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.status.winner {
+    color: #49DCB1;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.square {
+    cursor: pointer;
+    background: #17171f;
+    color: #e6e6eb;
+    border: 1px solid #999;
+    height: 7rem;
+    width: 7rem;
+    line-height: 4rem;
+    font-size: 4rem;
+    font-weight: bold;
+    padding: 0;
+}
+
+.history {
+    & li {
+        &::marker {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        + li {
+            margin-top: 1rem;
+        }
+    }
+}

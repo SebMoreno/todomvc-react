@@ -1,6 +1,10 @@
-import './App.css';
-import { TodoPage } from "./pages/todo-app/TodoPage.tsx";
+import { Outlet } from "react-router-dom";
+import "./App.css";
+import { NavBar } from "./components/NavBar.tsx";
 
 export const App = () => {
-    return <TodoPage />;
+    return <>
+        <NavBar/>
+        <Outlet/>
+    </>;
 };

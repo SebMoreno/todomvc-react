@@ -9,6 +9,7 @@ interface FooterProps {
     onFilterChange: (filter: FilterValue) => void;
     onClearCompleted: () => void;
 }
+
 export const Footer: FC<FooterProps> = ({
                                             activeCount,
                                             completedCount,
@@ -16,9 +17,18 @@ export const Footer: FC<FooterProps> = ({
                                             onFilterChange,
                                             onClearCompleted
                                         }) => {
-    return  <footer className="footer">
-        <span className="todo-count">4 tareas pendientes</span>
-        <Filters filterSelected={filterSelected} onFilterChange={onFilterChange}/>
-        <button className="clear-completed">Borrar completados</button>
-    </footer>;
+    const plural = activeCount !== 1 ? 's' : '';
+    return (
+        <footer className="footer">
+            <span className="todo-count">
+                {`${activeCount} tarea${plural} pendiente${plural}`}
+            </span>
+            <Filters filterSelected={filterSelected} onFilterChange={onFilterChange}/>
+            {completedCount > 0 && (
+                <button className="clear-completed" onClick={onClearCompleted}>
+                    Borrar completados
+                </button>
+            )}
+        </footer>
+    );
 };
